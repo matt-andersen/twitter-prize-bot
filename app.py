@@ -1,8 +1,5 @@
-import logging, sys, tweepy, time, random
+import logging, sys, tweepy, time, random, os
 from config import create_api
-import os
-import flask
-app = flask.Flask(__name__)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
