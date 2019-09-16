@@ -2,7 +2,8 @@ import tweepy
 from config import create_api
 
 FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
-                   "vote", "video", "democrats", "quote" "republicans", "mygirlfund"]
+                   "vote", "video", "democrats", "quote" "republicans", "mygirlfund", "only fans", "boob", "sugarbaby",
+                   "sugardaddy"]
 
 
 class FavRetweetListener(tweepy.StreamListener):
