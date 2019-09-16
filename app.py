@@ -1,13 +1,14 @@
 import logging, sys, tweepy, time, random
 from config import create_api
 import os
+import flask
+app = flask.Flask(__name__)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "ariana", "swift", "taylorswift",
-                   "comment", "tag", "reply", "full video", "vote", "video", "democrats",
-                   "republicans"]
+FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
+                   "vote", "video", "democrats", "quote" "republicans", "mygirlfund"]
 
 
 class FavRetweetListener(tweepy.StreamListener):
