@@ -125,6 +125,7 @@ dmypy.json
 .pyre/
 .gitignore
 .idea/
-/tweet.json
-/quote.json
-/finalerror
+/ignored/tweet.json
+/ignored/quote.json
+/ignored/finalerror
+/ignored/
