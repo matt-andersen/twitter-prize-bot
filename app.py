@@ -37,7 +37,7 @@ class FavRetweetListener(tweepy.StreamListener):
         if "like" in tweet_text:
             competition_tweet.favorite()
         competition_tweet.retweet()
-        print("\n{}. Success: Competition entered".format(self.tweet_count))
+        print("{}. Success: Competition entered".format(self.tweet_count))
         self.backoff_count = 1
         self.tweet_count += 1
 
