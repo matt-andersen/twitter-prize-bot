@@ -3,7 +3,8 @@ from config import create_api
 
 FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
                    "vote", "video", "democrats", "quote" "republicans", "mygirlfund", "only fans", "boob", "sugarbaby",
-                   "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude"]
+                   "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude",
+                   " justfor.fans", "taylorswift"]
 
 BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot"]
 
@@ -58,7 +59,7 @@ def get_source_tweet(tweet):
 
 def check_forbidden_urls(tweet_to_check):
     for url in tweet_to_check.entities['urls']:
-        if any(word in url['expanded_url'] for word in FORBIDDEN_WORDS):
+        if any(word in url['expanded_url'].lower() for word in FORBIDDEN_WORDS):
             return True
     return False
 
