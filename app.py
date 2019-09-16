@@ -18,7 +18,8 @@ class FavRetweetListener(tweepy.StreamListener):
         try:
             source_tweet, author = get_source_tweet(tweet)
             source_tweet_text = retrieve_tweet_text(source_tweet)
-            if not any(word in retrieve_tweet_text(source_tweet) for word in FORBIDDEN_WORDS):
+            if not any(word in source_tweet_text for word in FORBIDDEN_WORDS):
+                print(source_tweet_text)
                 if "rt" in source_tweet_text or "retweet" in source_tweet_text and "win" in source_tweet_text:
                     self.enter_competition(source_tweet, author)
         except tweepy.error.TweepError:
