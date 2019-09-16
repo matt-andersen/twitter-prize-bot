@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "ariana", "swift", "taylorswift",
-                   "comment", "tag", "reply", "cum", "full video", "vote", "video", "democrats",
+                   "comment", "tag", "reply", "full video", "vote", "video", "democrats",
                    "republicans"]
 
 

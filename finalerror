@@ -1,0 +1,54 @@
+Error: User is over daily status update limit.
+Backing off and trying again in 32.081 seconds
+
+Error: You have already retweeted this Tweet.
+Traceback (most recent call last):
+  File "C:\Python37\lib\http\client.py", line 591, in _readinto_chunked
+    n = self._safe_readinto(mvb)
+  File "C:\Python37\lib\http\client.py", line 638, in _safe_readinto
+    raise IncompleteRead(bytes(mvb[0:total_bytes]), len(b))
+http.client.IncompleteRead: IncompleteRead(0 bytes read, 512 more expected)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\urllib3\response.py", line 397, in _error_catcher
+    yield
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\urllib3\response.py", line 479, in read
+    data = self._fp.read(amt)
+  File "C:\Python37\lib\http\client.py", line 457, in read
+    n = self.readinto(b)
+  File "C:\Python37\lib\http\client.py", line 491, in readinto
+    return self._readinto_chunked(b)
+  File "C:\Python37\lib\http\client.py", line 602, in _readinto_chunked
+    raise IncompleteRead(bytes(b[0:total_bytes]))
+http.client.IncompleteRead: IncompleteRead(0 bytes read)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:/Libraries/My Documents/GitHub/twitter-bot/app.py", line 83, in <module>
+    main(["RT to win", "Retweet to win"])
+  File "D:/Libraries/My Documents/GitHub/twitter-bot/app.py", line 79, in main
+    stream.filter(track=keywords, languages=["en"])
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\tweepy\streaming.py", line 474, in filter
+    self._start(is_async)
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\tweepy\streaming.py", line 389, in _start
+    self._run()
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\tweepy\streaming.py", line 320, in _run
+    six.reraise(*exc_info)
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\six.py", line 693, in reraise
+    raise value
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\tweepy\streaming.py", line 289, in _run
+    self._read_loop(resp)
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\tweepy\streaming.py", line 339, in _read_loop
+    line = buf.read_line()
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\tweepy\streaming.py", line 200, in read_line
+    self._buffer += self._stream.read(self._chunk_size)
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\urllib3\response.py", line 496, in read
+    raise IncompleteRead(self._fp_bytes_read, self.length_remaining)
+  File "C:\Python37\lib\contextlib.py", line 130, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "D:\Libraries\My Documents\GitHub\twitter-bot\venv\lib\site-packages\urllib3\response.py", line 415, in _error_catcher
+    raise ProtocolError('Connection broken: %r' % e, e)
+urllib3.exceptions.ProtocolError: ('Connection broken: IncompleteRead(0 bytes read)', IncompleteRead(0 bytes read))
