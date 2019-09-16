@@ -19,7 +19,6 @@ class FavRetweetListener(tweepy.StreamListener):
             source_tweet, author = get_source_tweet(tweet)
             source_tweet_text = retrieve_tweet_text(source_tweet)
             if not any(word in source_tweet_text for word in FORBIDDEN_WORDS):
-                print(source_tweet_text)
                 if "rt" in source_tweet_text or "retweet" in source_tweet_text and "win" in source_tweet_text:
                     self.enter_competition(source_tweet, author)
         except tweepy.error.TweepError:
@@ -37,6 +36,7 @@ class FavRetweetListener(tweepy.StreamListener):
         out_file = open("tweet.json", "w", encoding='utf-8')
         print(str(competition_tweet), file=out_file)
         print("\n{}. Success: Competition entered".format(self.tweet_count))
+        print(tweet_text)
         self.backoff_count = 1
         self.tweet_count += 1
 
