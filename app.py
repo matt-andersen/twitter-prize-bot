@@ -1,8 +1,5 @@
-import logging, sys, tweepy, time, random, os
+import tweepy
 from config import create_api
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
 
 FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
                    "vote", "video", "democrats", "quote" "republicans", "mygirlfund"]
@@ -20,14 +17,13 @@ class FavRetweetListener(tweepy.StreamListener):
         try:
             source_tweet, author = get_source_tweet(tweet)
             source_tweet_text = retrieve_tweet_text(source_tweet)
-            if not any(word in retrieve_tweet_text(source_tweet).split() for word in FORBIDDEN_WORDS):
+            if not any(word in retrieve_tweet_text(source_tweet) for word in FORBIDDEN_WORDS):
                 if "rt" in source_tweet_text or "retweet" in source_tweet_text and "win" in source_tweet_text:
                     self.enter_competition(source_tweet, author)
-        except tweepy.error.TweepError as e:
+        except tweepy.error.TweepError:
             pass
-            # print("\n" + str(e))
         except Exception as e:
-            print(e.with_traceback())
+            print(e)
 
     def enter_competition(self, competition_tweet, username):
         tweet_text = retrieve_tweet_text(competition_tweet)
