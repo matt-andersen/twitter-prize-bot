@@ -7,9 +7,9 @@ from config import create_api
 FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
                    "vote", "video", "democrats", "quote" "republicans", "mygirlfund", "only fans", "boob", "sugarbaby",
                    "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude",
-                   " justfor.fans", "taylorswift", "xtube", "ass", "bdsm"]
+                   " justfor.fans", "taylorswift", "xtube", "ass", "bdsm", "cum", "dick"]
 
-BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot", "보라해방탄"]
+BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot", "보라해방탄", "virat", "kohli"]
 
 
 class FavRetweetListener(tweepy.StreamListener):
@@ -17,7 +17,7 @@ class FavRetweetListener(tweepy.StreamListener):
         super().__init__(api)
         self.api = api
         self.competition_tweet_count = 1
-        self.backoff_tweet_count = random.randint(200, 300)
+        self.backoff_tweet_count = random.randint(100, 150)
         self.total_backoff_count = 0
 
     def on_status(self, tweet):
@@ -28,7 +28,8 @@ class FavRetweetListener(tweepy.StreamListener):
         # Force bot to sleep for a random time after 200 to 300 competitions have been entered
         if self.competition_tweet_count == self.backoff_tweet_count:
             self.total_backoff_count += 1
-            # On the 4th backoff take a longer break between 1 to 2 hours
+            # On the 4th backoff take a longer break between 1 to 2 hours, then set backoff count back to 0
+            # Otherwise just take a short break between 20 and 30 minutes
             if self.total_backoff_count == 4:
                 random_sleep_time = random.randint(3600, 7200)
                 self.total_backoff_count = 0
