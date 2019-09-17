@@ -9,7 +9,7 @@ FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comme
                    "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude",
                    " justfor.fans", "taylorswift", "xtube", "ass", "bdsm"]
 
-BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot"]
+BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot", "보라해방탄"]
 
 
 class FavRetweetListener(tweepy.StreamListener):
