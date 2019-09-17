@@ -18,15 +18,22 @@ class FavRetweetListener(tweepy.StreamListener):
         self.api = api
         self.competition_tweet_count = 1
         self.backoff_tweet_count = random.randint(200, 300)
+        self.total_backoff_count = 0
 
     def on_status(self, tweet):
         """
         Called when a new tweet arrives - overrides parent method of the same name
         :param tweet: a JSON tweet object
         """
-        # Force bot to sleep for a random time between 20 to 30 minutes after 200 to 300 competitions have been entered
+        # Force bot to sleep for a random time after 200 to 300 competitions have been entered
         if self.competition_tweet_count == self.backoff_tweet_count:
-            random_sleep_time = random.randint(1200, 1800)
+            self.total_backoff_count += 1
+            # On the 4th backoff take a longer break between 1 to 2 hours
+            if self.total_backoff_count == 4:
+                random_sleep_time = random.randint(3600, 7200)
+                self.total_backoff_count = 0
+            else:
+                random_sleep_time = random.randint(1200, 1800)
             print("Sleeping now for {} minutes ".format(random_sleep_time / 60))
             time.sleep(random_sleep_time)
             self.backoff_tweet_count = random.randint(200, 300)
