@@ -5,9 +5,9 @@ import tweepy
 from config import create_api
 
 FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
-                   "vote", "video", "democrats", "quote" "republicans", "mygirlfund", "only fans", "boob", "sugarbaby",
+                   "vote", "video", "democrat", "quote" "republican", "mygirlfund", "only fans", "boob", "sugarbaby",
                    "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude",
-                   " justfor.fans", "taylorswift", "xtube", "ass", "bdsm", "cum", "dick"]
+                   " justfor.fans", "taylorswift", "xtube", "ass", "bdsm", "cum", "dick", "mummyinatutu"]
 
 BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot", "보라해방탄", "virat", "kohli"]
 
@@ -16,28 +16,23 @@ class FavRetweetListener(tweepy.StreamListener):
     def __init__(self, api):
         super().__init__(api)
         self.api = api
-        self.competition_tweet_count = 1
-        self.backoff_tweet_count = random.randint(100, 150)
-        self.total_backoff_count = 0
+        self.tweet_count = 0
+        self.compeition_tweet_count = 0
+        self.backoff_tweet_count = random.randint(800, 1000)
 
     def on_status(self, tweet):
         """
         Called when a new tweet arrives - overrides parent method of the same name
         :param tweet: a JSON tweet object
         """
-        # Force bot to sleep for a random time after 200 to 300 competitions have been entered
-        if self.competition_tweet_count == self.backoff_tweet_count:
-            self.total_backoff_count += 1
-            # On the 4th backoff take a longer break between 1 to 2 hours, then set backoff count back to 0
-            # Otherwise just take a short break between 20 and 30 minutes
-            if self.total_backoff_count == 4:
-                random_sleep_time = random.randint(3600, 7200)
-                self.total_backoff_count = 0
-            else:
-                random_sleep_time = random.randint(1200, 1800)
+        # Force bot to sleep for a random time after 800 to 1000 tweets have been entered processed
+        self.tweet_count += 1
+        if self.tweet_count == self.backoff_tweet_count:
+            random_sleep_time = random.randint(300, 600)
             print("Sleeping now for {} minutes ".format(random_sleep_time / 60))
             time.sleep(random_sleep_time)
-            self.backoff_tweet_count = random.randint(200, 300)
+            self.backoff_tweet_count = random.randint(800, 1000)
+            self.tweet_count = 0
         # The tweet is judged against multiple criteria before it is deemed to be an applicable competition
         try:
             source_tweet, author = get_source_tweet(tweet)
@@ -65,8 +60,8 @@ class FavRetweetListener(tweepy.StreamListener):
         if "like" in tweet_text:
             competition_tweet.favorite()
         competition_tweet.retweet()
-        print("{}. Success: Competition entered".format(self.competition_tweet_count))
-        self.competition_tweet_count += 1
+        self.compeition_tweet_count += 1
+        print("{}. Success: Competition entered".format(self.compeition_tweet_count))
 
 
 def get_source_tweet(tweet):
