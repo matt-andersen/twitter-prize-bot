@@ -9,7 +9,7 @@ FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comme
                    "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude",
                    " justfor.fans", "taylorswift", "xtube", "ass", "bdsm", "cum", "dick", "mummyinatutu",
                    "berniesanders", "caught out and silent", "caught out & silent", "timus automatic timeverse",
-                   "adecco"]
+                   "adecco", "emmy", "pca", "chaturbate", "actor", "actress"]
 
 BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot", "보라해방탄", "virat", "kohli"]
 
