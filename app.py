@@ -7,7 +7,9 @@ from config import create_api
 FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
                    "vote", "video", "democrat", "quote" "republican", "mygirlfund", "only fans", "boob", "sugarbaby",
                    "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude",
-                   " justfor.fans", "taylorswift", "xtube", "ass", "bdsm", "cum", "dick", "mummyinatutu"]
+                   " justfor.fans", "taylorswift", "xtube", "ass", "bdsm", "cum", "dick", "mummyinatutu",
+                   "berniesanders", "caught out and silent", "caught out & silent", "timus automatic timeverse",
+                   "adecco"]
 
 BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot", "보라해방탄", "virat", "kohli"]
 
