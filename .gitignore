@@ -1,6 +1,6 @@
-clean_timeline_spam.py
-pull_user_tweets.py
-prizes.txt
+ignored/clean_timeline_spam.py
+ignored/pull_user_tweets.py
+ignored/prizes.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

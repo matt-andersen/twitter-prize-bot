@@ -4,23 +4,16 @@ import tweepy
 
 from config import create_api
 
-FORBIDDEN_WORDS = ["porn", "sex", "brazzers", "onlyfans", "horny", "xxx", "comment", "tag", "reply", "full video",
-                   "vote", "video", "democrat", "quote" "republican", "mygirlfund", "only fans", "boob", "sugarbaby",
-                   "sugardaddy", "snapchat", "botspot", "bot spot", "trump", "tits", "rt.com", "milf", "nude",
-                   " justfor.fans", "taylorswift", "xtube", "ass", "bdsm", "cum", "dick", "mummyinatutu",
-                   "berniesanders", "caught out and silent", "caught out & silent", "timus automatic timeverse",
-                   "adecco", "emmy", "pca", "chaturbate", "actor", "actress"]
-
-BLOCKED_HANDLES = ["bot spot", "bot spotting", "b0t", "botspot", "보라해방탄", "virat", "kohli"]
-
 
 class FavRetweetListener(tweepy.StreamListener):
     def __init__(self, api):
         super().__init__(api)
         self.api = api
         self.tweet_count = 0
-        self.compeition_tweet_count = 0
+        self.competition_tweet_count = 0
         self.backoff_tweet_count = random.randint(800, 1000)
+        self.forbidden_words = load_text_file("forbidden/forbidden_words")
+        self.forbidden_handles = load_text_file("forbidden/forbidden_handles")
 
     def on_status(self, tweet):
         """
@@ -39,9 +32,9 @@ class FavRetweetListener(tweepy.StreamListener):
         try:
             source_tweet, author = get_source_tweet(tweet)
             source_tweet_text = retrieve_tweet_text(source_tweet)
-            contains_forbidden_url = check_forbidden_urls(source_tweet)
-            if not any(word in source_tweet_text for word in FORBIDDEN_WORDS) and not contains_forbidden_url:
-                if not any(word in source_tweet.user.name.lower() for word in BLOCKED_HANDLES):
+            contains_forbidden_url = check_forbidden_urls(source_tweet, self.forbidden_words)
+            if not any(word in source_tweet_text for word in self.forbidden_words) and not contains_forbidden_url:
+                if not any(word in source_tweet.user.name.lower() for word in self.forbidden_handles):
                     if "rt" in source_tweet_text or "retweet" in source_tweet_text and "win" in source_tweet_text:
                         self.enter_competition(source_tweet, author)
         except tweepy.error.TweepError:
@@ -62,8 +55,8 @@ class FavRetweetListener(tweepy.StreamListener):
         if "like" in tweet_text:
             competition_tweet.favorite()
         competition_tweet.retweet()
-        self.compeition_tweet_count += 1
-        print("{}. Success: Competition entered".format(self.compeition_tweet_count))
+        self.competition_tweet_count += 1
+        print("{}. Success: Competition entered".format(self.competition_tweet_count))
 
 
 def get_source_tweet(tweet):
@@ -87,14 +80,30 @@ def get_source_tweet(tweet):
         return tweet, tweet.user.screen_name
 
 
-def check_forbidden_urls(tweet_to_check):
+def load_text_file(file_location):
+    """
+    Stores a text file as a list
+    :param file_location: Location of the file and filename
+    :return: A list containing words from the appropriate file
+    """
+    text = []
+    in_file = open(file_location, "r")
+    for line in in_file:
+        item = line.strip()
+        text.append(item)
+    in_file.close()
+    return text
+
+
+def check_forbidden_urls(tweet_to_check, forbidden_words):
     """
     Checks to see if the tweet contains a url and if the url contains any words in the FORBIDDEN_WORDS list
     :param tweet_to_check: a JSON tweet object
+    :param forbidden_words: the forbidden word list
     :return: boolean value whether that indicates whether the tweet contains a forbidden URL
     """
     for url in tweet_to_check.entities['urls']:
-        if any(word in url['expanded_url'].lower() for word in FORBIDDEN_WORDS):
+        if any(word in url['expanded_url'].lower() for word in forbidden_words):
             return True
     return False
 
