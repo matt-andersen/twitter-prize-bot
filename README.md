@@ -2,8 +2,9 @@
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-A Twitter bot that finds competitions and satisfies criteria such as retweeting, liking, and following to enter the competition.
+A Twitter bot that uses Tweepy to find competitions and satisfies criteria such as retweeting, liking, and following to enter the competition.
 
+Click [here](prizes) to view a list of prizes the bot has won so far.
 
 ## Table of Contents
 
@@ -14,13 +15,7 @@ A Twitter bot that finds competitions and satisfies criteria such as retweeting,
 - [Contributing](#contributing)
 - [License](#license)
 
-## Install
-
-```
-TODO
-```
-
-## Usage
+## Setup
 
 ```
 TODO
