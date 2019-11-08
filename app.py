@@ -1,17 +1,19 @@
-import random
 import time
 import tweepy
 
 from config import create_api
+
+# List of locations that are permitted for contest entry
+LOCATIONS = ["au", "aus", "australia", "sydney", "brisbane", "melbourne", "perth", "global", "world", "queensland",
+             "new south wales", "victoria", "townsville", "cairns", "new zealand"]
 
 
 class FavRetweetListener(tweepy.StreamListener):
     def __init__(self, api):
         super().__init__(api)
         self.api = api
-        self.tweet_count = 0
         self.competition_tweet_count = 0
-        self.backoff_tweet_count = random.randint(800, 1000)
+        self.backoff_time = 2
         self.forbidden_words = load_text_file("forbidden/forbidden_words")
         self.forbidden_handles = load_text_file("forbidden/forbidden_handles")
 
@@ -20,23 +22,23 @@ class FavRetweetListener(tweepy.StreamListener):
         Called when a new tweet arrives - overrides parent method of the same name
         :param tweet: a JSON tweet object
         """
-        # Force bot to sleep for a random time after 800 to 1000 tweets have been entered processed
-        self.tweet_count += 1
-        if self.tweet_count == self.backoff_tweet_count:
-            random_sleep_time = random.randint(300, 600)
-            print("Sleeping now for {} minutes ".format(random_sleep_time / 60))
-            time.sleep(random_sleep_time)
-            self.backoff_tweet_count = random.randint(800, 1000)
-            self.tweet_count = 0
+        # Force bot to pause for a certain amout of seconds between requests to reduce spam
+        start = time.time()
+        while time.time() - start < self.backoff_time:
+            pass
         # The tweet is judged against multiple criteria before it is deemed to be an applicable competition
         try:
             source_tweet, author = get_source_tweet(tweet)
             source_tweet_text = retrieve_tweet_text(source_tweet)
             contains_forbidden_url = check_forbidden_urls(source_tweet, self.forbidden_words)
-            if not any(word in source_tweet_text for word in self.forbidden_words) and not contains_forbidden_url:
-                if not any(word in source_tweet.user.name.lower() for word in self.forbidden_handles):
-                    if "rt" in source_tweet_text or "retweet" in source_tweet_text and "win" in source_tweet_text:
-                        self.enter_competition(source_tweet, author)
+
+            if source_tweet.user.location and any(
+                    location in source_tweet.user.location.lower() for location in LOCATIONS):
+                print("LOCATION: " + source_tweet.user.location.lower())
+                if not any(word in source_tweet_text for word in self.forbidden_words) and not contains_forbidden_url:
+                    if not any(word in source_tweet.user.name.lower() for word in self.forbidden_handles):
+                        if "rt" in source_tweet_text or "retweet" in source_tweet_text and "win" in source_tweet_text:
+                            self.enter_competition(source_tweet, author)
         except tweepy.error.TweepError:
             pass
         except Exception as exception:
